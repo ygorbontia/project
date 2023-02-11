@@ -1,5 +1,14 @@
+const sqliteConnection = require("../database/sqlite");
+
 class UserController {
-  create(req, res) {
+  async create(req, res) {
+    const { name, email, password } = req.body;
+    const database = await sqliteConnection();
+
+    if (!name || !email || !password) {
+      
+    }
+    
     return res.json("Create");
   }
 
