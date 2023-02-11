@@ -65,8 +65,13 @@ class UserController {
     return res.json("As informações foram alteradas com sucesso.")
   }
 
-  delete(req, res) {
-    return res.json("Delete");
+  async delete(req, res) {
+    const { id } = req.params;
+    const database = await sqliteConnection();
+
+    await database.run("DELETE FROM users WHERE id = ?", [ id ]);
+
+    return res.json("Usuário excluído com sucesso.");
   }
 }
 
