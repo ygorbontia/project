@@ -27,16 +27,28 @@ class NotesController {
     return res.status(201).json("Nota cadastrada com sucesso.");
   }
 
-  show(req, res) {
+  async show(req, res) {
+    const { id } = req.params;
 
+    const movie = await knex("movie_notes").where({ id }).first();
+
+    return res.json(movie);
   }
 
-  delete(req, res) {
+  async delete(req, res) {
+    const { id } = req.params;
 
+    await knex("movie_notes").where({ id }).first().delete();
+
+    return res.json("A nota foi excluída com sucesso.")
   }
 
-  showAll(req, res) {
+  async showAll(req, res) {
+    const { user_id } = req.query;
 
+    const notes = await knex("movie_notes").where({ user_id });
+
+    return res.json(notes)
   }
 }
 
