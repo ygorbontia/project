@@ -3,8 +3,10 @@ const routes = Router();
 
 const userRoutes = require("./user.routes");
 const notesRoutes = require("./notes.routes");
+const sessionRoutes = require("./session.routes");
 
 routes.use("/users", userRoutes);
 routes.use("/notes", notesRoutes);
+routes.use("/session", sessionRoutes);
 
 module.exports = routes;
