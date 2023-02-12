@@ -7,6 +7,6 @@ const sessionRoutes = require("./session.routes");
 
 routes.use("/users", userRoutes);
 routes.use("/notes", notesRoutes);
-routes.use("/session", sessionRoutes);
+routes.use("/sessions", sessionRoutes);
 
 module.exports = routes;
