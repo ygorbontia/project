@@ -4,8 +4,10 @@ const userRoutes = Router();
 const UserController = require("../controllers/UserController");
 const userController = new UserController();
 
+const ensureAuthentication = require("../middlewares/ensureAuthentication");
+
 userRoutes.post("/", userController.create);
-userRoutes.put("/:id", userController.update);
-userRoutes.delete("/:id", userController.delete);
+userRoutes.put("/", ensureAuthentication, userController.update);
+userRoutes.delete("/", ensureAuthentication, userController.delete);
 
 module.exports = userRoutes;

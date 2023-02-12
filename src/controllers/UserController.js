@@ -27,10 +27,10 @@ class UserController {
 
   async update(req, res) {
     const { name, email, new_password, current_password } = req.body;
-    const { id } = req.params;
+    const user_id = req.user.id;
     const database = await sqliteConnection();
 
-    const user = await database.get("SELECT * FROM users WHERE id = ?", [ id ]);
+    const user = await database.get("SELECT * FROM users WHERE id = ?", [ user_id ]);
     if (!user) {
       throw new AppError("Usuário não encontrado.");
     }
@@ -59,17 +59,17 @@ class UserController {
     }
 
     await database.run("UPDATE users SET name = ?, email = ?, password = ?, updated_at = DATETIME('now') WHERE id = ?", [
-      user.name, user.email, user.password, id
+      user.name, user.email, user.password, user_id
     ])
 
     return res.json("As informações foram alteradas com sucesso.")
   }
 
   async delete(req, res) {
-    const { id } = req.params;
+    const user_id = req.user.id;
     const database = await sqliteConnection();
 
-    await database.run("DELETE FROM users WHERE id = ?", [ id ]);
+    await database.run("DELETE FROM users WHERE id = ?", [ user_id ]);
 
     return res.json("Usuário excluído com sucesso.");
   }
