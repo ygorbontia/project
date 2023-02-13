@@ -33,6 +33,10 @@ class NotesController {
     const user_id = req.user.id;
 
     const movie = await knex("movie_notes").where({ id }).first();
+    if (!movie) {
+      throw new AppError("Você não tem permissão para acessar essa nota", 401);
+    }
+
     if (movie.user_id !== user_id) {
       throw new AppError("Você não tem permissão para acessar essa nota", 401);
     }
