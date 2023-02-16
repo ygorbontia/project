@@ -8,14 +8,14 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
+const cors = require("cors");
+app.use(cors());
+
 const routes = require("./routes");
 app.use(routes);
 
 const uploadConfig = require("./configs/upload");
 app.use("/files", express.static(uploadConfig.UPLOAD_FOLDER));
-
-const cors = require("cors");
-app.use(cors());
 
 app.use((err, req, res, next) => {
   if (err instanceof AppError) {
