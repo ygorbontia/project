@@ -40,8 +40,8 @@ class UserController {
       throw new AppError("Este e-mail já está em uso.");
     }
 
-    user.name = name && user.name;
-    user.email = email && user.email;
+    user.name = name ?? user.name;
+    user.email = email ?? user.email;
 
     
     if (new_password && !current_password) {

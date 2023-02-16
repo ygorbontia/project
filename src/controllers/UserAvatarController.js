@@ -22,7 +22,7 @@ class UserAvatarController {
     
     await knex("users").update(user).where({ id });
     
-    return res.json("A imagem de avatar foi alterada com sucesso.")
+    return res.json(user)
   }
 }
 
