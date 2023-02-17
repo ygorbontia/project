@@ -33,6 +33,8 @@ class NotesController {
     const user_id = req.user.id;
 
     const movie = await knex("movie_notes").where({ id }).first();
+    const tags = await knex("movie_tags").where({ movie_id: id });
+    
     if (!movie) {
       throw new AppError("Você não tem permissão para acessar essa nota", 401);
     }
@@ -41,7 +43,10 @@ class NotesController {
       throw new AppError("Você não tem permissão para acessar essa nota", 401);
     }
 
-    return res.json(movie);
+    return res.json({
+      ...movie,
+      tags
+    });
   }
 
   async delete(req, res) {
