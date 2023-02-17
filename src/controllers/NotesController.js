@@ -63,9 +63,15 @@ class NotesController {
   }
 
   async showAll(req, res) {
+    const { title } = req.query;
     const user_id = req.user.id;
+    let notes;
 
-    const notes = await knex("movie_notes").where({ user_id }).orderBy("created_at", "desc");
+    if (title) {
+      notes = await knex("movie_notes").where({ user_id }).whereLike("title", `%${ title }%`).orderBy("title");
+    } else {
+      notes = await knex("movie_notes").where({ user_id }).orderBy("created_at", "desc");
+    }
 
     return res.json({ notes })
   }
