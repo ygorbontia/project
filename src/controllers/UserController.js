@@ -1,6 +1,7 @@
 const sqliteConnection = require("../database/sqlite");
 const AppError = require("../utils/AppError");
 const { hash, compare } = require("bcryptjs");
+const DiskStorage = require("../providers/DiskStorage");
 
 class UserController {
   async create(req, res) {
@@ -68,6 +69,10 @@ class UserController {
   async delete(req, res) {
     const user_id = req.user.id;
     const database = await sqliteConnection();
+    const diskStorage = new DiskStorage();
+
+    const user = await database.get("SELECT * FROM users WHERE id = ?", [ user_id ]);
+    diskStorage.deleteFile(user.avatar);
 
     await database.run("DELETE FROM users WHERE id = ?", [ user_id ]);
 
